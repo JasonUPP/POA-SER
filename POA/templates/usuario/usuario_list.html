@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Tabla
+{% endblock %}
+
+{% block content %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellido paterno</th>
+      <th scope="col">Apellido materno</th>
+      <th scope="col">Correo</th>
+      <th scope="col">Contraseña</th>
+      <th scope="col">Sexo</th>
+      <th scope="col">Edad</th>
+      <th scope="col">Nacimiento</th>
+      <th scope="col">Telefono</th>
+      <th scope="col">Domicilio</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if usuarios %}
+    {% for usuario in usuarios  %}
+    <tr class="table-light">
+      <td>{{ usuario.id }}</td>
+      <td>{{ usuario.nombre }}</td>
+      <td>{{ usuario.apellidoP }}</td>
+      <td>{{ usuario.apellidoM }}</td>
+      <td>{{ usuario.correo }}</td>
+      <td>{{ usuario.password }}</td>
+      <td>{{ usuario.sexo }}</td>
+      <td>{{ usuario.edad }}</td>
+      <td>{{ usuario.nacimiento }}</td>
+      <td>{{ usuario.telefono }}</td>
+      <td>{{ usuario.domicilio }}</td>
+      <td>
+        <a class="btn btn-primary" href="{% url 'editar' usuario.id %}">Editar</a>
+        <a class="btn btn-danger" href="{% url 'eliminar' usuario.id %}">Eliminar</a>
+      </td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <h5>No hay registros de usuarios</h5>
+    {% endif %}
+  </tbody>
+</table>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

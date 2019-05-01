@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+<div class="card text-white bg-dark mb-3">
+  <div class="card-header">Bienvenido</div>
+  <div class="card-body">
+    <h1 class="card-title">Que tal {{ user.username }}!</h1>
+    <p class="card-text">Ya puedes comenzar a gestionar tus anteproyectos, haz click
+       en "Anteproyecto" en la barra de navegación.</p>
+    <p>Todo listo!</p>
+  </div>
+</div>
+
+{% else %}
+<div class="jumbotron">
+<h1 class="display-3">Bienvenido!</h1>
+<p class="lead">En esta pagina podras registarte, iniciar sesión, administrar, crear, ver, editar anteproyectos.</p>
+<hr class="my-4">
+<p>Para poder hacer esto primero debes iniciar sesión o registarte</p>
+</div>
+{% endif %}
+{% endblock %}

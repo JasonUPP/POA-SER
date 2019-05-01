@@ -1,0 +1,64 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Tabla
+{% endblock %}
+
+{% block content %}
+
+    {% if anteproyectos %}
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Propietario</th>
+          <th scope="col">Imagen</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Total</th>
+          <th>Filas(Opciones)</th>
+          <th></th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+    {% for anteproyecto in anteproyectos  %}
+    <tr class="table-light">
+      <td>{{ anteproyecto.id }}</td>
+      <td>{{ anteproyecto.nombre }}</td>
+      <td>{{ anteproyecto.user }}</td>
+      <td>
+        {% if anteproyecto.imagen %}
+        <a href="{{ anteproyecto.imagen.url }}">
+        <img src="{{ anteproyecto.imagen.url }}" alt="{{anteproyecto.nombre}}" width="100">
+        </a>
+        {% else %}
+        Sin insertar
+        {% endif%}
+      </td>
+      <td>{{ anteproyecto.estado }}</td>
+      <td>{{ anteproyecto.totalA }}</td>
+      <td>
+        <a class="btn btn-outline-warning" href="{% url 'crearf' %}">Añadir fila</a>
+        <a class="btn btn-outline-info" href="{% url 'verf' anteproyecto.id %}">Ver filas</a>
+      </td>
+
+      <td></td>
+      <td>
+        <a class="btn btn-primary" href="{% url 'editap' anteproyecto.id %}">Editar</a>
+        <a class="btn btn-danger" href="{% url 'delap' anteproyecto.id %}">Eliminar</a>
+      </td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <h5>No hay registros de anteproyectos</h5>
+    {% endif %}
+
+
+  </tbody>
+</table>
+<center>
+<a href="{% url 'crearap' %}" class="btn btn-outline-danger">Crear anteproyecto</a>
+<a href="{% url 'AnteProyecto' %}" class="btn btn-outline-secondary">Regresar</a>
+</center>
+{% endblock %}

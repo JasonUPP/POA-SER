@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Tabla
+{% endblock %}
+
+{% block content %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellidos</th>
+      <th scope="col">Nombre de usuario</th>
+      <th scope="col">Correo</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if users %}
+    {% for user in users  %}
+    <tr class="table-light">
+      <td>{{ user.id }}</td>
+      <td>{{ user.first_name }}</td>
+      <td>{{ user.last_name }}</td>
+      <td>{{ user.username }}</td>
+      <td>{{ user.email }}</td>
+      <td>
+        <a class="btn btn-primary" href="{% url 'edit' user.id %}">Editar</a>
+        <a class="btn btn-danger" href="{% url 'delete' user.id %}">Eliminar</a>
+      </td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <h5>No hay registros de usuarios</h5>
+    {% endif %}
+  </tbody>
+</table>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

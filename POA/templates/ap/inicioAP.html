@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+
+{% block title %}AnteProyecto{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+  <h1 class="display-3">Anteproyecto</h1>
+  <p class="lead">Esta es la sección donde podrás elegir si crear un anteproyecto (donde añadas tus propias filas),
+    o insertar una imagen de algún otro (también podrás añadir filas), o añadir un nuevos capítulos por si
+    hacen falta al sistema. </p>
+  <hr class="my-4">
+  <p>Elige una de las siguientes opciones:</p>
+
+  <a href="{% url 'verap' %}"><button type="button" class="btn btn-info">Ver anteproyectos</button></a>
+  <a href="{% url 'insertap' %}"><button type="button" class="btn btn-success">Insertar anteproyecto (Imagen)</button></a>
+  <a href="{% url 'iniciopc' %}"><button type="button" class="btn btn-secondary">Configurar capitulos</button></a>
+</div>
+{% endblock %}

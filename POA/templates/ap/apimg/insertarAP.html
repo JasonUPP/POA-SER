@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Insertar Imagen{% endblock %}
+
+{% block content %}
+
+<h3>Subir un anteproyecto en forma de imagen</h3>
+<form method="POST" enctype="multipart/form-data">
+	{% csrf_token %}
+
+<div class="form-group">
+  <label class="col-form-label">Nombre de este Anteproyecto: </label>
+  {{ form.nombre }}
+</div>
+
+<div class="form-group">
+  <label class="col-form-label">Dueño: </label>
+  {{ form.user }}
+</div>
+
+<div class="form-group">
+  <label class="col-form-label">Total: </label>
+  {{ form.totalA }}
+</div>
+
+<div class="form-group">
+  <label for="exampleInputFile">Imagen del Anteproyecto</label>
+  <input type="file" name="imagen" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+  <small id="fileHelp" class="form-text text-muted">Selecciona un archivo tipo jpg para introducirlo</small>
+</div>
+
+
+		<div class="form-group" style="display:none">
+			<label>Estado</label>
+			{{form.estado}}
+		</div>
+
+	<button type="submit" class="btn btn-primary">Crear</button>
+	<a href="{% url 'AnteProyecto' %}" class="btn btn-outline-primary">Regresar</a>
+</form>
+{% endblock %}

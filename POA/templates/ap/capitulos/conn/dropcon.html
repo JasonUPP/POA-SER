@@ -1,0 +1,4 @@
+<option value="">---------</option>
+{% for concepto in conceptos %}
+<option value="{{ concepto.pk }}">{{ concepto.numero }}</option>
+{% endfor %}

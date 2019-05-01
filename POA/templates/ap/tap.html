@@ -1,0 +1,48 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Toyal AnteProyecto{% endblock %}
+
+{% block content %}
+<form method="POST">
+	{% csrf_token %}
+	
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="form-group">
+				<label>Total</label>
+				{{form.totalA}}
+			</div>
+		</div>
+	</div>
+
+	<div class="row" style="display:none">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="form-group">
+				<label>Usuario</label>
+				{{ form.user }}
+			</div>
+		</div>
+	</div>
+
+	<div class="row" style="display:none">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="form-group">
+				<label>Estado</label>
+				{{form.estado}}
+			</div>
+		</div>
+	</div>
+
+	<div class="row" style="display:none">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="form-group">
+				<label>Nombre</label>
+				{{form.nombre}}
+			</div>
+		</div>
+	</div>
+
+	<button type="submit" class="btn btn-primary">Guardar total</button>
+	<a href="{% url 'verap' %}" class="btn btn-outline-primary">Regresar</a>
+</form>
+{% endblock %}

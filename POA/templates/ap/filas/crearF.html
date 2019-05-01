@@ -1,0 +1,322 @@
+{% extends 'base/base.html' %}
+
+{% block extrastatic %}
+<script>
+	function sumar() {
+
+		var total = 0;
+
+		$(".num").each(function() {
+
+			if (isNaN(parseFloat($(this).val()))) {
+
+				total += 0;
+
+			} else {
+
+				total += parseFloat($(this).val());
+
+			}
+
+		});
+
+		//alert(total);
+		document.getElementById('spTotal').innerHTML = total;
+		document.getElementById("res").value=total;
+	}
+</script>
+{% endblock %}
+
+		{% block title %}Nueva fila{% endblock %}
+
+		{% block content %}
+<div class="alert alert-dismissible alert-info">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Elige tu anteproyecto!</strong> Y despues elige el capitulo, concepto y sus partidas (Son necesarias).
+	Seguido de un total por mes segun desees
+</div>
+<div class="alert alert-dismissible alert-secondary">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Atencion!</strong> Los campos que tienen * al inicio, son obligatorios.
+</div>
+		<form method="POST" id="filaForm" data-conceptos-url="{% url 'loadc' %}" data-pg-url="{% url 'loadpg' %}" data-pe-url="{% url 'loadpe' %}" >
+			{% csrf_token %}
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					<div class="form-group">
+						<label for="{{form.anteProyecto.name}}">{{form.anteProyecto.label}}</label>
+						{{ form.anteProyecto }}
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					<div class="form-group">
+						<label for="{{form.capitulo.name}}">*{{form.capitulo.label}}</label>
+						{{ form.capitulo }}
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					<div class="form-group">
+						<label for="{{form.concepto.name}}">*{{form.concepto.label}}</label>
+						{{ form.concepto }}
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					<div class="form-group">
+						<label for="{{form.partidagenerica.name}}">*{{form.partidagenerica.label}}</label>
+						{{ form.partidagenerica }}
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					<div class="form-group">
+						<label for="{{form.partidaespecifica.name}}">*{{form.partidaespecifica.label}}</label>
+						{{ form.partidaespecifica }}
+					</div>
+				</div>
+			</div>
+
+<table class="table table-hover">
+	<tbody>
+		<tr class="table-secondary">
+			<td scope="col">Enero</td>
+			<td scope="col">Febrero</td>
+			<td scope="col">Marzo</td>
+			<td scope="col">Abril</td>
+			<td scope="col">Mayo</td>
+			<td scope="col">Junio</td>
+		</tr>
+		<tr class="table-light">
+			<td>
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					<div class="form-group">
+						<input value="0" class="num" type="text" name="enero" id="txt_campo_1" onchange="sumar(this.value);" onClick="this.select()">
+					</div>
+				</div>
+			</div>
+			</td>
+
+			<td>
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="form-group">
+							<input value="0" class="num" type="text" name="febrero" id="txt_campo_2" onchange="sumar(this.value);" onClick="this.select()">
+						</div>
+					</div>
+				</div>
+			</td>
+
+			<td>
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="form-group">
+							<input class="num" type="text" name="marzo" value="0" id="txt_campo_3" onchange="sumar(this.value);" onClick="this.select()">
+						</div>
+					</div>
+				</div>
+			</td>
+
+			<td>
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="form-group">
+							<input class="num" type="text" name="abril" value="0" id="txt_campo_4" onchange="sumar(this.value);" onClick="this.select()">
+						</div>
+					</div>
+				</div>
+			</td>
+
+			<td>
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="form-group">
+							<input class="num" type="text" name="mayo" value="0" id="txt_campo_5" onchange="sumar(this.value);" onClick="this.select()">
+						</div>
+					</div>
+				</div>
+			</td>
+
+			<td>
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="form-group">
+							<input class="num" type="text" name="junio" value="0" id="txt_campo_6" onchange="sumar(this.value);" onClick="this.select()">
+						</div>
+					</div>
+				</div>
+			</td>
+		</tr>
+
+		<tr class="table-secondary">
+			<td scope="col">Julio</td>
+			<td scope="col">Agosto</td>
+			<td scope="col">Septiembre</td>
+			<td scope="col">Octubre</td>
+			<td scope="col">Noviembre</td>
+			<td scope="col">Diciembre</td>
+		</tr>
+
+		<tr class="table-light">
+			<td>
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="form-group">
+							<input class="num" type="text" name="julio" value="0" id="txt_campo_7" onchange="sumar(this.value);" onClick="this.select()">
+						</div>
+					</div>
+				</div>
+			</td>
+
+			<td>
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="form-group">
+							<input class="num" type="text" name="agosto" value="0" id="txt_campo_8" onchange="sumar(this.value);" onClick="this.select()">
+						</div>
+					</div>
+				</div>
+			</td>
+
+			<td>
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="form-group">
+							<input class="num" type="text" name="septiembre" value="0" id="txt_campo_9" onchange="sumar(this.value);" onClick="this.select()">
+						</div>
+					</div>
+				</div>
+			</td>
+
+			<td>
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="form-group">
+							<input class="num" type="text" name="octubre" value="0" id="txt_campo_10" onchange="sumar(this.value);" onClick="this.select()">
+						</div>
+					</div>
+				</div>
+			</td>
+
+			<td>
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="form-group">
+							<input class="num" type="text" name="noviembre" value="0" id="txt_campo_11" onchange="sumar(this.value);" onClick="this.select()">
+						</div>
+					</div>
+				</div>
+			</td>
+
+			<td>
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="form-group">
+							<input class="num" type="text" name="diciembre" value="0" id="txt_campo_12" onchange="sumar(this.value);" onClick="this.select()">
+						</div>
+					</div>
+				</div>
+			</td>
+		</tr>
+
+		<tr class="table-secondary">
+			<td>Total</td>
+		</tr>
+		<tr class="table-active">
+			<td>
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="form-group">
+								 <span id="spTotal" Style="Display:none;"></span>
+								 <input type="text" id="res" name="totalF" readonly="">
+						</div>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<center>
+			<button type="submit" class="btn btn-outline-success">Añadir Fila</button>
+			<a href="{% url 'verap' %}" class="btn btn-outline-primary">Regresar</a>
+</center>
+
+			{% if form.errors %}
+					{% for field in form %}
+							{% for error in field.errors %}
+									<div class="alert alert-danger">
+											<strong>{{ error|escape }}</strong>
+									</div>
+							{% endfor %}
+					{% endfor %}
+					{% for error in form.non_field_errors %}
+							<div class="alert alert-danger">
+									<strong>{{ error|escape }}</strong>
+							</div>
+					{% endfor %}
+			{% endif %}
+		</form>
+
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script>
+			$("#id_capitulo").change(function () {
+				var url = $("#filaForm").attr("data-conceptos-url");
+				var capituloId = $(this).val();
+
+				$.ajax({
+					url: url,
+					data: {
+						'capitulo': capituloId
+					},
+					success: function (data) {
+						$("#id_concepto").html(data);
+					}
+				});
+			});
+		</script>
+
+		<script>
+			$("#id_concepto").change(function () {
+				var url = $("#filaForm").attr("data-pg-url");
+				var conceptoId = $(this).val();
+
+				$.ajax({
+					url: url,
+					data: {
+						'concepto': conceptoId
+					},
+					success: function (data) {
+						$("#id_partidagenerica").html(data);
+					}
+				});
+			});
+		</script>
+
+		<script>
+			$("#id_partidagenerica").change(function () {
+				var url = $("#filaForm").attr("data-pe-url");
+				var partidagenericaId = $(this).val();
+
+				$.ajax({
+					url: url,
+					data: {
+						'partidagenerica': partidagenericaId
+					},
+					success: function (data) {
+						$("#id_partidaespecifica").html(data);
+					}
+				});
+			});
+		</script>
+
+		{% endblock %}

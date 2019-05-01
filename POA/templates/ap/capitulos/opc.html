@@ -1,0 +1,61 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Elige{% endblock %}
+
+{% block content %}
+<blockquote class="blockquote">
+  <p class="mb-0">Que te gustaría añadir?</p>
+  <footer class="blockquote-footer">Elige una de las siguientes opciones para continuar</footer>
+</blockquote>
+
+<div class="progress">
+  <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+<div class="list-group">
+  <a href="{% url 'vercap' %}" class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">Capitulos</h5>
+      <small>Ver capitulos</small>
+    </div>
+    <p class="mb-1">Aqui podras ver los capitulos existentes</p>
+    <small>Ademas de añadir o modificar</small>
+  </a>
+
+  <a href="{% url 'vercon' %}" class="list-group-item list-group-item-action flex-column align-items-start active">
+  <div class="d-flex w-100 justify-content-between">
+    <h5 class="mb-1">Conceptos</h5>
+    <small>Ir a conceptos</small>
+  </div>
+  <p class="mb-1">Ver los conceptos existentes con sus relaciones</p>
+  <small>Podras añadir o modificar</small>
+</a>
+
+<a href="{% url 'verpg' %}" class="list-group-item list-group-item-action flex-column align-items-start">
+  <div class="d-flex w-100 justify-content-between">
+    <h5 class="mb-1">Partidas Genericas</h5>
+    <small>Ver partidas genericas</small>
+  </div>
+  <p class="mb-1">Aqui podras ver las partidas genericas existentes con sus relaciones</p>
+  <small class="text-muted">Ademas de añadir o modificar</small>
+</a>
+
+<a href="{% url 'verpe' %}" class="list-group-item list-group-item-action flex-column align-items-start active">
+<div class="d-flex w-100 justify-content-between">
+  <h5 class="mb-1">Partdias Especificas</h5>
+  <small>Ir a partidas especificas</small>
+</div>
+<p class="mb-1">Ver las partidas especificas con sus relaciones y nombres.</p>
+<small>Podras añadir o modificar</small>
+</a>
+</div>
+<div class="progress">
+  <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<br>
+
+<center>
+<a href="{% url 'AnteProyecto' %}" class="btn btn-secondary">Regresar</a>
+</center>
+
+{% endblock %}

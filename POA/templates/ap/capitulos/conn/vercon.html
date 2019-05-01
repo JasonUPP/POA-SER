@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Conceptos
+{% endblock %}
+
+{% block content %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Numero</th>
+      <th scope="col">Capitulo</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if conceptos %}
+    {% for concepto in conceptos  %}
+    <tr class="table-light">
+      <td>{{ concepto.id }}</td>
+      <td>{{ concepto.numero }}</td>
+      <td>{{ concepto.capitulo }}</td>
+      <td>
+        <a class="btn btn-primary" href="{% url 'editcon' concepto.id %}">Editar</a>
+        <a class="btn btn-danger" href="{% url 'delcon' concepto.id %}">Eliminar</a>
+      </td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <h5>No hay registros de conceptos</h5>
+    {% endif %}
+  </tbody>
+</table>
+<center>
+<a href="{% url 'crearcon' %}" class="btn btn-outline-danger">Nuevo Concepto</a>
+<a href="{% url 'iniciopc' %}" class="btn btn-outline-secondary">Regresar</a>
+</center>
+{% endblock %}

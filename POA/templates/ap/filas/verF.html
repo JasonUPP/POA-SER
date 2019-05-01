@@ -1,0 +1,118 @@
+{% extends 'base/base.html' %}
+
+{% block extrastatic %}
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+	function mostrar(it, box) {
+		var vis = (box.checked) ? "block" : "none";
+		document.getElementById(it).style.display = vis;
+	}
+</script>
+{% endblock %}
+
+{% block title %}
+Tabla
+{% endblock %}
+
+{% block content %}
+{% if filas %}
+<table class="table table-hover">
+  <thead>
+    <tr class="table-warning">
+      <td scope="col">Id</td>
+      <td scope="col">Capitulo</td>
+      <td scope="col">Partida</td>
+      <td scope="col">Ene</td>
+      <td scope="col">Feb</td>
+      <td scope="col">Mar</td>
+      <td scope="col">Abr</td>
+      <td scope="col">May</td>
+      <td scope="col">Jun</td>
+      <td scope="col">Jul</td>
+      <td scope="col">Ago</td>
+      <td scope="col">Sep</td>
+      <td scope="col">Oct</td>
+      <td scope="col">Nov</td>
+      <td scope="col">Dic</td>
+      <td scope="col">Total</td>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for fila in filas  %}
+    <tr class="table-active">
+      <td>{{ fila.id }}</td>
+      <td>{{ fila.capitulo }}</td>
+      <td>{{ fila.partidagenerica_id }}</td>
+      <td>{{ fila.enero }}</td>
+      <td>{{ fila.febrero }}</td>
+      <td>{{ fila.marzo }}</td>
+      <td>{{ fila.abril }}</td>
+      <td>{{ fila.mayo }}</td>
+      <td>{{ fila.junio }}</td>
+      <td>{{ fila.julio }}</td>
+      <td>{{ fila.agosto }}</td>
+      <td>{{ fila.septiembre }}</td>
+      <td>{{ fila.octubre }}</td>
+      <td>{{ fila.noviembre }}</td>
+      <td>{{ fila.diciembre }}</td>
+      <td>{{ fila.totalF}}</td>
+      <td>
+				<!-- Esto es un comentario-->
+        <a class="btn btn-outline-primary" href="{% url 'editf' fila.id %}">Editar</a>
+        <a class="btn btn-outline-danger" href="{% url 'delf' fila.id %}">Eliminar</a>
+      </td>
+    </tr>
+    {% endfor %}
+
+    <tr class="table-success">
+      <td scope="col"></td>
+      <td scope="col">Total:</td>
+      <td scope="col"></td>
+      <td scope="col">{{obj.enero__sum}}</td>
+      <td scope="col">{{objF.febrero__sum}}</td>
+      <td scope="col">{{objM.marzo__sum}}</td>
+      <td scope="col">{{objA.abril__sum}}</td>
+      <td scope="col">{{objMay.mayo__sum}}</td>
+      <td scope="col">{{objJ.junio__sum}}</td>
+      <td scope="col">{{objJul.julio__sum}}</td>
+      <td scope="col">{{objAg.agosto__sum}}</td>
+      <td scope="col">{{objS.septiembre__sum}}</td>
+      <td scope="col">{{objO.octubre__sum}}</td>
+      <td scope="col">{{objN.noviembre__sum}}</td>
+      <td scope="col">{{objD.diciembre__sum}}</td>
+      <td scope="col"><button type="button" class="btn btn-danger">{{tot}}</button></td>
+      <td></td>
+    </tr>
+		{% else %}
+		<h5>No hay registros de filas</h5>
+		{% endif %}
+
+  </tbody>
+</table>
+<center>
+
+<a href="{% url 'crearf' %}" class="btn btn-outline-success">Añadir fila</a>
+<a href="{% url 'verap' %}" class="btn btn-outline-secondary">Regresar</a>
+<br><br>
+
+<div class="custom-control custom-checkbox">
+	<input type="checkbox" class="custom-control-input" id="customCheck1" onclick="mostrar('div1', this)">
+	<label class="custom-control-label" for="customCheck1">¿Todo parece correcto?</label>
+</div>
+<br>
+
+<div style="display:none" id="div1">
+
+	<div class="alert alert-dismissible alert-danger">
+	  <button type="button" class="close" data-dismiss="alert">&times;</button>
+	  <strong>Atención!</strong> Tendrás que ingresar el valor que se encuentra de color rojo, podrás modificarlo después.
+	</div>
+	{% for anteproyecto in anteproyectos %}
+		<a href="{% url 'tf' anteproyecto.id %}" class="btn btn-warning btn-lg">Guardar total {{anteproyecto.nombre}}</a>
+	{% endfor %}
+</div>
+</center>
+
+{% endblock %}
