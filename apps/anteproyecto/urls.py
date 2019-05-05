@@ -5,12 +5,15 @@ urlpatterns = [
     path('', views.inicio, name='AnteProyecto'),
     #AP
     path('nuevoAP/', views.crearap, name='crearap'),
-    path('totalA/<int:id_anteproyecto>', views.tf, name='tf'),
     path('verAP/', views.verap, name='verap'),
     path('delAP/<int:id_anteproyecto>/', views.delap, name='delap'),
     path('editAP/<int:id_anteproyecto>/', views.editap, name='editap'),
     #ApImg
     path('InsertarAP/', views.antePI, name='insertap'),
+    #Calendario
+    path('CalendarioG/', views.calglo, name='calglo'),
+    #Reporte Mensual
+    path('totalMensual/', views.totm, name='totm'),
     #Fila
     path('nuevaF/', views.crearf, name="crearf"),
     path('verF/<int:id_anteproyecto>', views.verf, name="verf"),

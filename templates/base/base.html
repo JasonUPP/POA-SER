@@ -24,7 +24,16 @@
     <ul class="navbar-nav mr-auto">
 			{% if user.is_superuser %}
 			<li class="nav-item">
-				<a class="nav-link" href="{% url 'list' %}"><span class="badge badge-dark">Lista</span></a>
+				<a class="nav-link" href="{% url 'list' %}"><span class="badge badge-dark">Lista de usuarios</span></a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'calglo' %}"><span class="badge badge-pill badge-warning">Calendario Global</span></a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'totm' %}"><span class="badge badge-pill badge-success">Reporte Mensual</span></a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'admin:index' %}"><span class="badge badge-light">Sitio de administrador</span></a>
 			</li>
 			{% endif %}
 

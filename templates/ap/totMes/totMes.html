@@ -1,0 +1,72 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Total Mensual
+{% endblock %}
+
+{% block content %}
+<h2>Total de filas: {{nf}}</h2>
+<table class="table table-hover">
+  <thead>
+    <tr class="table-warning">
+      <th scope="row">Mes: </th>
+      <td>Total: </td>
+    </tr>
+  </thead>
+  <tbody>
+    {% if tms %}
+    <tr class="table-light">
+        <td>Enero</td>
+        <td>{{obj.enero__sum}}</td>
+    </tr>
+    <tr class="table-light">
+        <td>febrero</td>
+        <td>{{objF.febrero__sum}}</td>
+    </tr>
+    <tr class="table-light">
+        <td>Marzo</td>
+        <td>{{objM.marzo__sum}}</td>
+    </tr>
+    <tr class="table-light">
+        <td>Abril</td>
+        <td>{{objA.abril__sum}}</td>
+    </tr>
+    <tr class="table-light">
+        <td>Mayo</td>
+        <td>{{objMay.mayo__sum}}</td>
+    </tr>
+    <tr class="table-light">
+        <td>Junio</td>
+        <td>{{objJ.junio__sum}}</td>
+    </tr>
+    <tr class="table-light">
+        <td>Julio</td>
+        <td>{{objJul.julio__sum}}</td>
+    </tr>
+    <tr class="table-light">
+        <td>Agosto</td>
+        <td>{{objAg.agosto__sum}}</td>
+    </tr>
+    <tr class="table-light">
+        <td>Septiembre</td>
+        <td>{{objS.septiembre__sum}}</td>
+    </tr>
+    <tr class="table-light">
+        <td>Octubre</td>
+        <td>{{objO.octubre__sum}}</td>
+    </tr>
+    <tr class="table-light">
+        <td>Noviembre</td>
+        <td>{{objN.noviembre__sum}}</td>
+    </tr>
+    <tr class="table-light">
+        <td>Diciembre</td>
+        <td>{{objD.diciembre__sum}}</td>
+    </tr>
+    {% else %}
+    Vaya! nadie a registrado nada aun.
+    {% endif %}
+
+  </tbody>
+</table>
+{% endblock %}

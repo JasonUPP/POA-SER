@@ -2,12 +2,6 @@
 
 {% block extrastatic %}
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript">
-	function mostrar(it, box) {
-		var vis = (box.checked) ? "block" : "none";
-		document.getElementById(it).style.display = vis;
-	}
-</script>
 {% endblock %}
 
 {% block title %}
@@ -59,8 +53,8 @@ Tabla
       <td>{{ fila.diciembre }}</td>
       <td>{{ fila.totalF}}</td>
       <td>
-				<!-- Esto es un comentario-->
-        <a class="btn btn-outline-primary" href="{% url 'editf' fila.id %}">Editar</a>
+				<!-- <a class="btn btn-outline-primary" href="{% url 'editf' fila.id %}">Editar</a> -->
+
         <a class="btn btn-outline-danger" href="{% url 'delf' fila.id %}">Eliminar</a>
       </td>
     </tr>
@@ -82,7 +76,7 @@ Tabla
       <td scope="col">{{objO.octubre__sum}}</td>
       <td scope="col">{{objN.noviembre__sum}}</td>
       <td scope="col">{{objD.diciembre__sum}}</td>
-      <td scope="col"><button type="button" class="btn btn-danger">{{tot}}</button></td>
+      <td scope="col">{{tot}}</td>
       <td></td>
     </tr>
 		{% else %}
@@ -96,23 +90,40 @@ Tabla
 <a href="{% url 'crearf' %}" class="btn btn-outline-success">Añadir fila</a>
 <a href="{% url 'verap' %}" class="btn btn-outline-secondary">Regresar</a>
 <br><br>
+</center>
 
-<div class="custom-control custom-checkbox">
-	<input type="checkbox" class="custom-control-input" id="customCheck1" onclick="mostrar('div1', this)">
-	<label class="custom-control-label" for="customCheck1">¿Todo parece correcto?</label>
-</div>
-<br>
 
-<div style="display:none" id="div1">
+<!-- <h2>Filas: {{nf}}</h2> -->
 
-	<div class="alert alert-dismissible alert-danger">
-	  <button type="button" class="close" data-dismiss="alert">&times;</button>
-	  <strong>Atención!</strong> Tendrás que ingresar el valor que se encuentra de color rojo, podrás modificarlo después.
-	</div>
-	{% for anteproyecto in anteproyectos %}
-		<a href="{% url 'tf' anteproyecto.id %}" class="btn btn-warning btn-lg">Guardar total {{anteproyecto.nombre}}</a>
-	{% endfor %}
-</div>
+<!-- Form para guardar total de anteProyecto y las filas -->
+<center>
+<form method="POST">
+	{% csrf_token %}
+
+  {% if user.is_superuser %}
+  {% else %}
+  <!-- Oculto -->
+  <div class="form-group" style="display:none">
+      <label>Nombre para el AnteProyecto</label>
+      {{form.nombre}}
+    </div>
+  <div class="form-group" style="display:none">
+    <label>Usuario</label>
+    {{form.user}}
+  </div>
+<!-- Oculto-->
+  <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
+    <div class="card-header">Total</div>
+    <div class="card-body">
+      <p class="card-text">Presupuesto de este anteproyecto: </p>
+      <input type="text" name="totalA" value="{{tot}}" readonly="" class="card-title"><br>
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <a href="{% url 'verap' %}" class="btn btn-primary">Regresar</a>
+    </div>
+  </div>
+  {% endif %}
+
+</form>
 </center>
 
 {% endblock %}

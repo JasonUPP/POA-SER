@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class AnteProyecto(models.Model):
     nombre = models.CharField(max_length=100)
-    fila = models.IntegerField(blank=True, null=True)
+    filas = models.IntegerField(blank=True, null=True, default=0)
     totalA = models.FloatField(max_length=30, blank=True, null=True, default=0)
     user = models.ForeignKey(User, null=True, blank=False, on_delete=models.CASCADE)
     imagen = models.ImageField(upload_to='apimg/%Y/%m/%d/', null=True, blank=True)
@@ -14,7 +14,7 @@ class AnteProyecto(models.Model):
             ("Desarrollo", ("Desarrollo")),
         )
 
-    estado = models.CharField(choices=STATUS_CHOICES, default="Desarrollo", max_length=15)
+    estado = models.CharField(choices=STATUS_CHOICES, default="Desarrollo", max_length=15, blank=True)
     def __str__(self):
         return '{}'.format(self.nombre)
 
@@ -63,6 +63,6 @@ class PartidaEspecifica(models.Model):
     numero = models.IntegerField()
     nombre = models.CharField(max_length=80)
     descripcion = models.CharField(max_length=200)
-    partidaGenerica = models.ForeignKey(PartidaGenerica, null=True, blank=False, on_delete=models.CASCADE)
+    partidagenerica = models.ForeignKey(PartidaGenerica, null=True, blank=False, on_delete=models.CASCADE)
     def __str__(self):
-        return '{} {} {}'.format(self.partidaGenerica, self.numero, self.nombre)
+        return '{} {} {}'.format(self.partidagenerica, self.numero, self.nombre)

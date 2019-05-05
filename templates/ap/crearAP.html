@@ -33,16 +33,17 @@
 	{{form.imagen}}
 </div>
 
-<div class="row" style="display:none">
-	<div class="col-md-8 col-md-offset-2">
-		<div class="form-group">
-			<label>Estado</label>
-			{{form.estado}}
-		</div>
-	</div>
+{%if user.is_superuser %}
+<div class="alert alert-dismissible alert-success">
+<button type="button" class="close" data-dismiss="alert">&times;</button>
+<strong>Administrador!</strong> Aqui puedes cambiar el estado de un anteproyecto.
 </div>
-
-	<button type="submit" class="btn btn-primary">Crear</button>
+<div class="form-group">
+<label>Estado</label>
+{{form.estado}}
+</div>
+{% endif %}
+	<button type="submit" class="btn btn-primary">Guardar</button>
 	<a href="{% url 'verap' %}" class="btn btn-outline-primary">Regresar</a>
 
 

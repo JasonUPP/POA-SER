@@ -45,32 +45,34 @@ class FilaForm(forms.ModelForm):
         self.fields['partidagenerica'].queryset = PartidaGenerica.objects.none()
         self.fields['partidaespecifica'].queryset = PartidaEspecifica.objects.none()
 
-        if 'concepto' in self.data:
+        if 'capitulo' in self.data:
             try:
                 capitulo_id = int(self.data.get('capitulo'))
                 self.fields['concepto'].queryset = Concepto.objects.filter(capitulo_id=capitulo_id).order_by('id')
             except (ValueError, TypeError):
-                pass #entrada inválida del cliente; ignorar y retroceder a un Queryset de concepto vacío
+                pass  # invalid input from the client; ignore and fallback to empty City queryset
         elif self.instance.pk:
             self.fields['concepto'].queryset = self.instance.capitulo.concepto_set.order_by('id')
 
-        if 'partidagenerica' in self.data:
+        if 'concepto' in self.data:
             try:
                 concepto_id = int(self.data.get('concepto'))
                 self.fields['partidagenerica'].queryset = PartidaGenerica.objects.filter(concepto_id=concepto_id).order_by('id')
             except (ValueError, TypeError):
-                pass #entrada inválida del cliente; ignorar y retroceder a un Queryset de pg vacío
+                pass  # invalid input from the client; ignore and fallback to empty City queryset
         elif self.instance.pk:
             self.fields['partidagenerica'].queryset = self.instance.concepto.partidagenerica_set.order_by('id')
 
-        if 'partidaespecifica' in self.data:
+        if 'partidagenerica' in self.data:
             try:
-                partidaGenerica_id = int(self.data.get('partidagenerica'))
-                self.fields['partidaespecifica'].queryset = PartidaEspecifica.objects.filter(partidaGenerica_id=partidaGenerica_id).order_by('id')
+                partidagenerica_id = int(self.data.get('partidagenerica'))
+                self.fields['partidaespecifica'].queryset = PartidaEspecifica.objects.filter(partidagenerica_id=partidagenerica_id).order_by('id')
             except (ValueError, TypeError):
-                pass #entrada inválida del cliente; ignorar y retroceder a un Queryset de pe vacío
+                pass  # invalid input from the client; ignore and fallback to empty City queryset
         elif self.instance.pk:
             self.fields['partidaespecifica'].queryset = self.instance.partidagenerica.partidaespecifica_set.order_by('id')
+
+
 
 class CapituloForm(forms.ModelForm):
     class Meta:
@@ -101,10 +103,10 @@ class PGForm(forms.ModelForm):
 class PEForm(forms.ModelForm):
     class Meta:
         model = PartidaEspecifica
-        fields = {'numero','nombre','descripcion','partidaGenerica'}
+        fields = {'numero','nombre','descripcion','partidagenerica'}
         widgets = {
         'numero':forms.NumberInput(attrs={'class':'form-control'}),
         'nombre': forms.TextInput(attrs={'class':'form-control'}),
         'descripcion': forms.TextInput(attrs={'class':'form-control'}),
-        'partidaGenerica': forms.Select(attrs={'class':'form-control'}),
+        'partidagenerica': forms.Select(attrs={'class':'form-control'}),
         }

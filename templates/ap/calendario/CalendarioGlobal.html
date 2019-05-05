@@ -1,0 +1,61 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Calendario
+{% endblock %}
+
+{% block content %}
+
+    {% if calglos %}
+    <table class="table table-hover">
+      <thead>
+        <tr class="table-success">
+          <th scope="col">Id</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Propietario</th>
+          <th scope="col">Imagen</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Total</th>
+          <th>Ver filas</th>
+        </tr>
+      </thead>
+      <tbody>
+    {% for calglo in calglos  %}
+    <tr class="table-active">
+      <td>{{ calglo.id }}</td>
+      <td>{{ calglo.nombre }}</td>
+      <td>{{ calglo.user }}</td>
+      <td>
+        {% if calglo.imagen %}
+        <a href="{{ calglo.imagen.url }}">
+        <img src="{{ calglo.imagen.url }}" alt="{{calglo.nombre}}" width="100">
+        </a>
+        {% else %}
+        Sin insertar
+        {% endif%}
+      </td>
+      <td>{{ calglo.estado }}</td>
+      <td>{{ calglo.totalA }}</td>
+      <td>
+        <a class="btn btn-primary" href="{% url 'editap' calglo.id %}">Editar</a>
+        <a class="btn btn-outline-info" href="{% url 'verf' calglo.id %}">Ver anteproyecto</a>
+      </td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <h5>No hay registros de anteproyectos</h5>
+    {% endif %}
+  </tbody>
+</table>
+<center>
+<div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+  <div class="card-header">Total</div>
+  <div class="card-body">
+    <h4 class="card-title">Presupuesto global</h4>
+    <p class="card-text">El total de los anteproyectos es de: <h2>{{ preglo.totalA__sum}}</h2></p>
+  </div>
+</div>
+
+<a href="{% url 'index' %}" class="btn btn-outline-warning">Regresar</a>
+</center>
+{% endblock %}

@@ -15,29 +15,20 @@ def crearap(request):
     if request.method == "POST":
         form = ApForm(request.POST, request.FILES)
         if form.is_valid():
-            ap = form.save()
+            ap = form.save(commit=False)
+            ap.user = request.user
+            ap.save()
             return redirect('verap')
     else:
         form = ApForm()
     contexto = {'form': form, 'users':user}
     return render(request, 'ap/crearAP.html', contexto)
 
-def tf(request, id_anteproyecto):
-	anteproyecto = AnteProyecto.objects.get(id=id_anteproyecto)
-	if request.method == 'GET':
-		form = ApForm(instance=anteproyecto)
-	else:
-		form = ApForm(request.POST, instance=anteproyecto)
-		if form.is_valid():
-			form.save()
-		return redirect('verap')
-	return render(request, 'ap/tap.html', {'form':form})
-
 def verap(request):
-	anteproyecto = AnteProyecto.objects.filter(user__username=request.user)
-    #nf = Fila.objects.filter(anteProyecto_id=id_anteproyecto).count()
-	contexto = {'anteproyectos':anteproyecto}
-	return render(request, 'ap/viewAP.html', contexto)
+    anteproyecto = AnteProyecto.objects.filter(user__username=request.user)
+    contexto = {'anteproyectos':anteproyecto}
+    return render(request, 'ap/viewAP.html', contexto)
+
 
 def delap(request, id_anteproyecto):
 	anteproyecto = AnteProyecto.objects.get(id=id_anteproyecto)
@@ -67,6 +58,33 @@ def antePI(request):
     else:
         form = ApForm()
     return render(request, 'ap/apimg/insertarAP.html', {'form':form})
+#Calendario Global--------------------------------------------------------------
+def calglo(request):
+    calglo = AnteProyecto.objects.all()
+    preglo = AnteProyecto.objects.aggregate(Sum('totalA'))
+    contexto = {'calglos':calglo, 'preglo':preglo}
+    return render(request, 'ap/calendario/CalendarioGlobal.html', contexto)
+
+#Total por meses----------------------------------------------------------------
+def totm(request):
+    tm = Fila.objects.all()
+    obj=Fila.objects.all().aggregate(Sum('enero'))
+    objF=Fila.objects.all().aggregate(Sum('febrero'))
+    objM=Fila.objects.all().aggregate(Sum('marzo'))
+    objA=Fila.objects.all().aggregate(Sum('abril'))
+    objMay=Fila.objects.all().aggregate(Sum('mayo'))
+    objJ=Fila.objects.all().aggregate(Sum('junio'))
+    objJul=Fila.objects.all().aggregate(Sum('julio'))
+    objAg=Fila.objects.all().aggregate(Sum('agosto'))
+    objS=Fila.objects.all().aggregate(Sum('septiembre'))
+    objO=Fila.objects.all().aggregate(Sum('octubre'))
+    objN=Fila.objects.all().aggregate(Sum('noviembre'))
+    objD=Fila.objects.all().aggregate(Sum('diciembre'))
+    nf=Fila.objects.all().count()
+    contexto = {'tms':tm, 'obj':obj, 'objF':objF, 'objM':objM,
+     'objA':objA, 'objMay':objMay, 'objJ':objJ, 'objJul':objJul,
+     'objAg':objAg, 'objS':objS, 'objO':objO, 'objN':objN, 'objD':objD, 'nf':nf }
+    return render(request, 'ap/totMes/totMes.html', contexto)
 
 #Fila---------------------------------------------------------------------------
 def crearf(request):
@@ -81,10 +99,15 @@ def crearf(request):
     return render(request, 'ap/filas/crearF.html', contexto)
 
 def verf(request, id_anteproyecto):
+    #Para el form
+    ap = AnteProyecto.objects.get(id=id_anteproyecto)
+    #AnteProyecto de x usuario
     anteproyecto = AnteProyecto.objects.filter(user__username=request.user)
     #Ver filas que pertenecen a x anteproyecto
     fila = Fila.objects.filter(anteProyecto_id=id_anteproyecto)
-    #Suma de columnas por mes
+    #Numero de filas con filtro de anteProyecto
+    nf = Fila.objects.filter(anteProyecto=id_anteproyecto).count()
+    #Suma de columnas por mes con filtro de anteProyecto
     obj=Fila.objects.filter(anteProyecto_id=id_anteproyecto).aggregate(Sum('enero'))
     objF=Fila.objects.filter(anteProyecto_id=id_anteproyecto).aggregate(Sum('febrero'))
     objM=Fila.objects.filter(anteProyecto_id=id_anteproyecto).aggregate(Sum('marzo'))
@@ -98,7 +121,15 @@ def verf(request, id_anteproyecto):
     objN=Fila.objects.filter(anteProyecto_id=id_anteproyecto).aggregate(Sum('noviembre'))
     objD=Fila.objects.filter(anteProyecto_id=id_anteproyecto).aggregate(Sum('diciembre'))
     tot = obj['enero__sum']+objF['febrero__sum']+objM['marzo__sum']+objA['abril__sum']+objMay['mayo__sum']+objJ['junio__sum']+objJul['julio__sum']+objAg['agosto__sum']+objS['septiembre__sum']+objO['octubre__sum']+objN['noviembre__sum']+objD['diciembre__sum']
-    contexto = {'filas':fila, 'obj':obj, 'objF':objF, 'objM':objM, 'objA':objA, 'objMay':objMay, 'objJ':objJ, 'objJul':objJul, 'objAg':objAg, 'objS':objS, 'objO':objO, 'objN':objN, 'objD':objD, 'tot':tot, 'anteproyectos':anteproyecto}
+    #Guardar el total y numero de Filas
+    if request.method == 'GET':
+        form = ApForm(instance=ap)
+    else:
+        form = ApForm(request.POST, instance=ap)
+        if form.is_valid():
+            form.save()
+        return redirect('verap')
+    contexto = {'filas':fila, 'obj':obj, 'objF':objF, 'objM':objM, 'objA':objA, 'objMay':objMay, 'objJ':objJ, 'objJul':objJul, 'objAg':objAg, 'objS':objS, 'objO':objO, 'objN':objN, 'objD':objD, 'tot':tot, 'anteproyectos':anteproyecto, 'nf':nf, 'form':form}
     return render(request, 'ap/filas/verF.html', contexto)
 
 def delf(request, id_fila):
@@ -241,8 +272,8 @@ def verpe(request):
     return render(request, 'ap/capitulos/pe/verpe.html', contexto)
 
 def loadpe(request):
-    partidaGenerica_id = request.GET.get('partidagenerica')
-    partidaespecificas = PartidaEspecifica.objects.filter(partidaGenerica_id=partidaGenerica_id).order_by('id')
+    partidagenerica_id = request.GET.get('partidagenerica')
+    partidaespecificas = PartidaEspecifica.objects.filter(partidagenerica_id=partidagenerica_id).order_by('id')
     return render(request, 'ap/capitulos/pe/droppe.html', {'partidaespecificas': partidaespecificas})
 
 def crearpe(request):
