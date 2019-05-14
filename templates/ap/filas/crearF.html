@@ -41,13 +41,15 @@
 </div>
 		<form method="POST" id="filaForm" data-conceptos-url="{% url 'loadc' %}" data-pg-url="{% url 'loadpg' %}" data-pe-url="{% url 'loadpe' %}" >
 			{% csrf_token %}
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2">
-					<div class="form-group">
-						<label for="{{form.anteProyecto.name}}">{{form.anteProyecto.label}}</label>
-						{{ form.anteProyecto }}
-					</div>
-				</div>
+
+
+			<div class="form-group">
+				<label>AnteProyecto</label>
+				<select name="anteProyecto" class="form-control">
+					{% for anteproyecto in anteproyectos %}
+					<option value="{{anteproyecto.pk}}">{{anteproyecto.nombre}}</option>
+					{% endfor %}
+				</select>
 			</div>
 
 			<div class="row">

@@ -29,7 +29,6 @@ def verap(request):
     contexto = {'anteproyectos':anteproyecto}
     return render(request, 'ap/viewAP.html', contexto)
 
-
 def delap(request, id_anteproyecto):
 	anteproyecto = AnteProyecto.objects.get(id=id_anteproyecto)
 	if request.method == 'POST':
@@ -88,6 +87,7 @@ def totm(request):
 
 #Fila---------------------------------------------------------------------------
 def crearf(request):
+    anteproyecto = AnteProyecto.objects.filter(user__username=request.user)
     if request.method == "POST":
         form = FilaForm(request.POST)
         if form.is_valid():
@@ -95,7 +95,7 @@ def crearf(request):
             return redirect('verap')
     else:
         form = FilaForm()
-    contexto = {'form':form}
+    contexto = {'form':form, 'anteproyectos':anteproyecto}
     return render(request, 'ap/filas/crearF.html', contexto)
 
 def verf(request, id_anteproyecto):
